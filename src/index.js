@@ -49,9 +49,10 @@ class SnapShotter {
         for(let i = 0; i < totalSupply; i++){
 
             // ask the contract who the current holder is
-            const ownerAddress = await this.contract.methods.ownerOf(i).call();
+            let ownerAddress = await this.contract.methods.ownerOf(i).call();
+            // normalise addresses to avoid duplicates
+            ownerAddress = ownerAddress.toLowerCase();
 
-            console.log('holder:', ownerAddress);
             // use holder addresses as object keys
             if(!holder[ownerAddress]){
                 holder[ownerAddress] = 1;
